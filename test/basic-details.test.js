@@ -33,16 +33,26 @@ describe('Basic details', () => {
     spy.restore();
   });
 
-  it('_captureDetails() method called ', () => {    
-    // const sampleArr = ["amount","form-field","e-handle"];
-    const spy = Sinon.spy(el, '_captureDetails');
-    el._captureDetails();
-    el.shadowRoot.querySelector('.type').value = 'Home Loan';
+  it('_captureDetails() - makes a post request with the inputs', ()=>{
+    const spy = Sinon.spy(window, 'fetch');
+    el.shadowRoot.querySelector('.type').value = 'Personal Loan';
     el.shadowRoot.querySelector('.amount').value = '10000';
-    el.shadowRoot.querySelector('.period').value = '2';
-    // el.shadowRoot.querySelector('.amount').classList[2] = 'e-handle';
+    el.shadowRoot.querySelector('.period').value = '10';
+    el._captureDetails();
+    expect(spy.args[0][1].method).to.equal('POST');
+    expect(spy.args[0][1].body).deep.equal('{"name":"Personal Loan","amount":"10000","period":"10"}');
     expect(spy).to.have.called;
-    // expect(el.shadowRoot.querySelector('.amount')).to.equal(sampleArr[2]);
+    spy.restore();
+  });
+
+  it('_captureDetails() - doesnt makes a post request as amount is less than 10k', ()=>{
+    const spy = Sinon.spy(window, 'fetch');
+    el.shadowRoot.querySelector('.type').value = 'Personal Loan';
+    el.shadowRoot.querySelector('.amount').value = '8000';
+    el.shadowRoot.querySelector('.period').value = '10';
+    el._captureDetails();
+    expect([...el.shadowRoot.querySelector('.amount').classList].indexOf('e-handle')).to.not.equal(-1);
+    expect(spy).to.not.have.called;
     spy.restore();
   });
 
@@ -52,5 +62,5 @@ describe('Basic details', () => {
     expect(spy).to.have.called;
     expect(spy.firstCall.args[0]).to.equal('/');
     spy.restore();
-  });  
+  });
 });

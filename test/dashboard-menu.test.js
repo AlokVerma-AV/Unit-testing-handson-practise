@@ -16,12 +16,10 @@ describe('Dashboard Menu details', () => {
   });
 
   it('_setTypeInLS() method called ', () => {
-    const spy = Sinon.spy(el, '_setTypeInLS');
-    const spy1 = Sinon.spy(el, 'navigateToDetails');
+    const spy = Sinon.spy(el, 'navigateToDetails');
     el._setTypeInLS();
     el.navigateToDetails();
     expect(spy).to.have.called;
-    expect(spy1).to.have.called;
     spy.restore();
   });
 
