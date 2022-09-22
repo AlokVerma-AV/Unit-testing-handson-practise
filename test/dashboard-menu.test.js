@@ -15,10 +15,9 @@ describe('Dashboard Menu details', () => {
     expect(el).to.be.accessible;
   });
 
-  it('_setTypeInLS() method called ', () => {
+  it('_setTypeInLS() method calls navigateToDetails()', () => {
     const spy = Sinon.spy(el, 'navigateToDetails');
     el._setTypeInLS();
-    el.navigateToDetails();
     expect(spy).to.have.called;
     spy.restore();
   });

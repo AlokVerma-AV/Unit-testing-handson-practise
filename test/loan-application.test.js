@@ -15,11 +15,7 @@ describe('LoanApplication', () => {
   });
 
   it('__increment() called', () => {
-    const spy = Sinon.spy(el, '__increment');
     el.__increment();
-    spy.restore();
-    // el.counter = 1;
-    // console.log(spy).to.have.called;
-    // console.log(el.counter).to.be(6);
+    expect(el.counter).to.equal(6)
   });
 });
